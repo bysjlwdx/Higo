@@ -1,0 +1,107 @@
+{% load staticfiles %}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("a:contains('删除')").click(function(){
+                if(confirm('你确定要删除吗？'))
+                {
+                    return true;
+                }else
+                {
+                    return false;
+                }
+            });
+        });
+    </script>
+
+</head>
+<body>
+   <button class="btn btn-primary" type="button" onclick="location.href='{% url 'hgo_insert' %}'">添加用户信息</button>
+
+   {% block content %}
+       <div class="container">
+<form action="" method="post" >
+  {% csrf_token %}
+
+
+         <div class="form-group">
+
+        <input type="text"  id="name" class="" name="name" placeholder="请输入姓名" style="width: 200px">    <input type="submit" value="查询" class="btn btn-primary"/>
+
+         </div>
+
+
+
+
+
+</form>
+</div>
+   <table class="table table-striped table-bordered">
+       <caption>用户信息</caption>
+        <thead class="table-bordered">
+            <tr>
+              <th>姓名</th>
+              <th>性别</th>
+              <th>年龄</th>
+                <th>住址</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody class="table-bordered">
+          {% for user in contacts %}
+            <tr class="table-bordered">
+              <td>{{ user.name}}</td>
+              <td>{{ user.gender }}</td>
+              <td>{{ user.age}}</td>
+                <td>{{user.address }}</td>
+              <td>
+                  <a href="/del?id={{user.id }}"  class="text-danger">删除</a>
+                  <a href="/query/?id={{user.id }}"  class="text-primary">修改</a>
+              </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+   </table>
+
+
+ <div class="pagination">
+    <span class="step-links">
+     <ul id="pages" class="pagination pagination-sm pagination-xs">
+        {% if contacts.has_previous %}
+            <li>  <a href="?page=1">&laquo; 首页</a></li>
+            <li> <a href="?page={{ contacts.previous_page_number }}">上一页</a></li>
+        {% endif %}
+
+ <span class="current">
+             第 {{ contacts.number }}页  .  共 {{ contacts.paginator.num_pages }}页
+    </span>
+
+ {% for page_num in contacts.paginator.page_range %}
+  <li><a class="item" href="?page={{page_num}}">
+    {{page_num}}
+  </a>
+  </li>
+  {% endfor %}
+        {% if contacts.has_next %}
+            <li>  <a href="?page={{ contacts.next_page_number }}">下一页</a></li>
+            <li> <a href="?page={{ contacts.paginator.num_pages }}">最后一页 &raquo;</a></li>
+        {% endif %}
+
+
+
+     </ul>
+
+
+
+    </span>
+</div>
+
+{% endblock %}
+</body>
+</html>

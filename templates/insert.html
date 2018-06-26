@@ -1,0 +1,58 @@
+{% load staticfiles %}
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>添加数据</title>
+     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+     <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <style>
+.col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+  <div class="row myCenter">
+    <div class="col-xs-6 col-md-4 col-center-block">
+    <form role="form-horizontal" method="post" action="{% url 'hgo_insert' %}">
+        {% csrf_token %}
+      <div class="form-group">
+          <label for="name">姓名：</label>
+          <div class="controls">
+          <input type="text"  id="name" class="form-control" name="name" placeholder="请输入姓名" style="width: 300px">
+              </div>
+      </div>
+        <div class="form-group">
+            <label class="gender">性别：</label>
+            <label class="checkbox-inline">
+                <input type="radio" name="gender" id="gender1" value="男" checked="checked">男
+            </label>
+             <label class="checkbox-inline">
+                <input type="radio" name="gender"  id="gender1" value="女">女
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="age">年龄：</label>
+             <div class="controls">
+            <input type="text" name="age" class="form-control"  id="age" placeholder="请输入年龄：" style="width: 300px">
+                 </div>
+        </div>
+        <div class="form-group">
+            <label for="address">住址：</label>
+             <div class="controls">
+            <input type="text" id="address" class="form-control"  name="address" placeholder="请输入住址：" style="width: 300px">
+                  </div>
+        </div>
+        <button class="btn btn-primary" type="submit">提交</button>
+    </form>
+        </div>
+      </div>
+      </div>
+</body>
+</html>
